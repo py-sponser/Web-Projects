@@ -76,8 +76,8 @@
   <div class="card" style="width: 21.5rem;display:inline-flex;margin: 20px;">
     <div class="card-body">
       <h4 class="card-title" style="color:dodgerblue;font-weight: bold;">{{ task.title }}</h4>
-      <pre class="card-text">Ends: {{ task.deadline_date }}<br>{% if task.completed == True %}<span class="badge rounded-pill bg-success">Completed</span>{% else %}<span class="badge rounded-pill bg-danger">Pending</span>{% endif %}
-                                        </pre> {# if task is completed: show a green badge with text 'Completed' #} {# if not completed: show a red badge with text 'Pending' #}
+      <pre class="card-text">Ends: {{ task.deadline_date }}<br>{% if task.completed == True %}<span class="badge rounded-pill bg-success">Completed</span>{% else %}<span class="badge rounded-pill bg-danger">Pending</span>{% endif %}</pre>
+                                         {# if task is completed: show a green badge with text 'Completed' #} {# if not completed: show a red badge with text 'Pending' #}
 
                                         
       <div class="accordion" id="accordionExample">

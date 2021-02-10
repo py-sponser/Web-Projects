@@ -15,13 +15,14 @@
     </div>
 </div>
 {# a bootstrap card in which a form for Password change! #}
-<div class="card" style="width: 21.5rem;display:inline-flex;margin-left: 250px;">
+<div class="card" style="width: 600px;display:inline-flex;margin-left: 250px;">
     <div class="card-body">
         <form method="POST">
+            <h4 class="card-title" style="color:dodgerblue;font-weight: bold;margin-left:170px;">Change Password:</h4>
+
             {% csrf_token %}
-            <h4 class="card-title" style="color:dodgerblue;font-weight: bold;">Change Password:</h4>
-            {{ password_form.as_p }}
-            <input class="btn btn-primary" type="submit" value="Change Password"><br>
+            <p style="width:auto">{{ password_form.as_p }}</p>
+            <input class="btn btn-primary" style="margin-left: 200px;" type="submit" value="Change Password"><br>
 
         </form>
     </div>

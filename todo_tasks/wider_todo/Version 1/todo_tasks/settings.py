@@ -133,8 +133,8 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "" # A Company Email that'll be used to send emails to user's Email
-EMAIL_HOST_PASSWORD = "" # Company Email's password
+EMAIL_HOST_USER = "todotasks4000@gmail.com" # A Company Email that'll be used to send emails to user's Email
+EMAIL_HOST_PASSWORD = "0146896947TODOTODOTODO   " # Company Email's password
 
 # CRONJOBS
 CRONJOBS = [
