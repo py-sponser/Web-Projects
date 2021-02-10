@@ -1,0 +1,136 @@
+{% load static %}
+<!-- To use static files -->
+<!DOCTYPE html>
+<div lang="en-US">
+
+  <head>
+    <title>Home</title>
+    <!-- Importing Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"></script>
+
+  </head>
+
+  <body class="loader">
+    <nav class="navbar navbar-expand-lg navbar-white bg-white">
+      <div class="container-fluid">
+        {# The navbar !! #}
+        <ul class="navbar-nav">
+          <li style="margin-left: 100px;color:dodgerblue;font-weight: bold;font-size: 18px;" class="nav-item"><a
+              class="nav-link" aria-current="page" href="{% url 'index' %}">Home</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          {% if user.is_authenticated %} {# Showing specific buttons and anchor links if user is authenticated #}
+          {# Welcome Text #}
+          <li style="margin-top: 14px;margin-right: 10px;color:dodgerblue;font-weight: bold;font-size: 18px;"
+            class="nav-item">Welcome {{ user.first_name }} {{ user.last_name }}</li>
+
+          {# Dropdown list in which there's link to settings page and a link to logout #}
+          <li style="margin-right: 50px;" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <img width="40" height="40" src="{% static 'icons/default_user.png' %}"> {# icon as dropdown list header #}
+            </a>
+
+            {# the dropdown menu #}
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li> {# link to settings page #}
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a style="color:dodgerblue;font-weight: bold;" class="dropdown-item"
+                  href="{% url 'logout' %}">Logout</a></li> {# link to logout #}
+            </ul>
+
+          </li>
+
+          {% else %} {# if user is not authenticated #}
+          {# link to register #}
+          <li style="margin-right: 10px;color:dodgerblue;font-weight: bold;font-size: 18px;" class="nav-item"><a
+              class="nav-link" aria-current="page" href="{% url 'register' %}">Sign Up</a></li>
+
+          {# link to login #}
+          <li style="margin-right: 50px;color:dodgerblue;font-weight: bold;font-size: 18px;" class="nav-item"><a
+              class="nav-link" aria-current="page" href="{% url 'login' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </body>
+
+
+{# anything outside the 'block body_block' can be imported in other html files, so that navbar above will be imported #}
+
+  {% block body_block %}
+  {% if user.is_authenticated %} {# show tasks of logged in user if user is authenticated #}
+  <span style="margin-left: 535px;color:dodgerblue;font-weight: bold;font-size: 18px;" class="nav-item text-center"><a
+      class="nav-link" aria-current="page" href="{% url 'create_task' %}"><img style="width: 30px;height: 30px;"
+        src="{% static 'icons/task-icon.jpg' %}">Create Task</a></span>
+
+  {# in task app views, index function: we passed the list of tasks to the template here with a name of tasks to display them #}
+  {% for task in tasks %}
+  <div class="card" style="width: 21.5rem;display:inline-flex;margin: 20px;">
+    <div class="card-body">
+      <h4 class="card-title" style="color:dodgerblue;font-weight: bold;">{{ task.title }}</h4>
+      <pre class="card-text">Ends: {{ task.deadline_date }}<br>{% if task.completed == True %}<span class="badge rounded-pill bg-success">Completed</span>{% else %}<span class="badge rounded-pill bg-danger">Pending</span>{% endif %}
+                                        </pre> {# if task is completed: show a green badge with text 'Completed' #} {# if not completed: show a red badge with text 'Pending' #}
+
+                                        
+      <div class="accordion" id="accordionExample">
+
+        {# Accordion with bootstrap #}
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+              aria-expanded="false" aria-controls="collapseOne">
+              Description
+              <!--Title of Accordion button-->
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              {{ task.description }} {# Task description is the body of Accordion #}
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+
+
+      <a style="color:white;" class="btn btn-warning" href="{% url 'update_task' pk=task.pk %}">Update</a> 
+      {# link to the task update page with providing its pk to get the requested right task from db and update it #}
+      <a class="btn btn-danger" href="{% url 'delete_task' pk=task.pk %}">Delete</a> 
+      {# a link to the task deletion page with providing its pk to delete the requested right task! #}
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+
+</div>
+{% else %} {# if user is not authenticated, display content for home page!, this is separated (navbar is independant) #}
+<div class="d-flex h-100 text-center text-blue bg-white">
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <main class="px-3">
+      <h1 style="color:dodgerblue">Manage your life with todo-tasks</h1>
+      <p style="color:dodgerblue;font-weight: bold" class="lead">We help you to manage your life by having your tasks
+        well ordered and notifiable, Sign Up now!!</p>
+
+    </main>
+
+    <footer class="mt-auto text-white-50">
+      <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a
+          href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+    </footer>
+  </div>
+</div>
+</div>
+
+{% endif %}
+
+{% endblock %}

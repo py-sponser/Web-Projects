@@ -1,0 +1,47 @@
+<head>
+
+  <title>
+    Login
+  </title>
+</head>
+
+
+
+{% extends 'index.html' %} {# Extends (Imports) only the navbar #}
+{% block body_block %}
+<div class="text-center">
+  <main class="form-signin">
+    <br><br>
+    <h1 style="color:dodgerblue;font-weight: bold;">Login</h1><br>
+
+    <form action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      <label for="inputEmail">
+        <input style="width:300px;" type="text" id="inputEmail" name="username" class="form-control"
+          placeholder="Username" required autofocus>
+      </label>
+      <br><br>
+      <label for="inputPassword">
+        <input style="width:300px;" type="password" name="password" id="inputPassword" class="form-control"
+          placeholder="Password" required>
+      </label><br><br>
+      <input type="submit" value="Login" class="btn btn-primary"><br><br>
+      {# Displaying whatever messages we created in the views functions for the user #}
+    {# for loop is used to access properties of messages and make logic on them if required to display them in specific design or form #}
+      {% for message in messages %}
+      <div class="alert alert-danger" style="width:300px;margin:auto;" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %}
+
+      <a style="font-weight: bold;color:dodgerblue;" href="{% url 'password_reset' %}">Forgot your password?</a><br><br>
+      {# link to reset_password url which executes Password Reset process explained in urls.py#}
+      <span style="font-weight: bold;color:dodgerblue;">Haven't account? <a href="{% url 'register' %}">Sign
+          Up</a></span> {# in case user hasn't account, link to register page #}
+
+    </form>
+
+  </main>
+</div>
+
+{% endblock %}

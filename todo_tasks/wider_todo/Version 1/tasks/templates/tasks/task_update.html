@@ -1,0 +1,23 @@
+<title>Update Task</title>
+{% extends "index.html" %} {# imports the navbar only! #}
+{% block body_block %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1 style="color:dodgerblue;">Update Task</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <input style="color:white;" class="btn btn-warning" type="submit" value="Update">
+                <a class="btn btn-primary" href="{% url 'index' %}">Cancel</a> {# Cancel link to home page #}
+            </form>
+            {# Displaying whatever messages we created in the views functions for the user #}
+            {# for loop is used to access properties of messages and make logic on them if required to display them in specific design or form #}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+

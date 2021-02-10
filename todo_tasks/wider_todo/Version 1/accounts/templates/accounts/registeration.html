@@ -1,0 +1,50 @@
+<title>
+    Sign Up
+</title>
+{% extends 'index.html' %}
+{% block body_block %}
+        <br><br>
+        <form class="text-center" action="{% url 'register' %}" method="POST">
+            <h1 style="color:dodgerblue;font-weight: bold;">Sign Up</h1><br>
+            {% csrf_token %}
+            <label style="margin-left: 7px" for="inputFirstName">
+                <input style="width:280px;" class="form-control" id="inputFirstName" type="text" placeholder="First Name" name="firstname" required>
+            </label>
+            <label for="inputLastName">
+                <input style="width:300px;" class="form-control" id="inputLastName" type="text" placeholder="Last Name" name="lastname" required>
+            </label><br><br>
+            <label for="inputUser">
+            <input style="width:300px;" class="form-control" id="inputUser" type="text" placeholder="Username" name="username" required>
+            </label><br>
+            <br>
+            <label for="inputPassword1">
+            <input style="width:300px;" class="form-control" id="inputPassword1" type="password" name="password1" placeholder="Password" required>
+            </label><br><br>
+            <pre style="margin-right: 230px;color:dodgerblue;">{{ requirements }}</pre>
+            <label for="inputPassword2">
+            <input style="width:300px;" class="form-control" type="password" id="inputPassword2" name="password2" placeholder="Verify Password" required>
+            </label><br>
+            <br>
+            <label for="inputEmail">
+            <input style="width:300px;" class="form-control" id="inputEmail" type="email" placeholder="Email Address" name="email" required>
+            </label>
+            <br><br>
+            <input style="width:300px;" class="btn btn-primary form-control" type="submit" value="Sign Up"><br><br>
+            {% for message in messages %} {# explained in account_settings.html #}
+                {% if message.tags == "info" %}
+                    <div style="margin:auto;width:300px;" class="alert alert-danger" role="alert">
+                                    {{ message }}
+                    </div>
+                    {% else %}
+                    <div style="margin:auto;width:300px;" class="alert alert-{{message.tags}}" role="alert">
+                    {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+                <span style="color:dodgerblue;font-weight: bold;">
+               Already registered? <a  href="{% url 'login' %}">Login</a></span> {# link to login page #}
+
+        </form>
+
+
+{% endblock %}

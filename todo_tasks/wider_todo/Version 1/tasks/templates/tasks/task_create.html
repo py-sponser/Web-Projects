@@ -1,0 +1,21 @@
+{% extends 'index.html' %} {# only imports the navbar #}
+{% block body_block %}
+    <form method="POST">
+        <div class="container">
+            <div class="jumbotron">
+                 {% csrf_token %}
+                {{ form.as_p }}
+            <input class="btn btn-success" type="submit" value="Create">
+            <a class="btn btn-primary" href="{% url 'index' %}">Cancel</a><br>{# Cancel link that redirect page to home page #}
+
+        {# Displaying whatever messages we created in the views functions for the user #}
+        {# for loop is used to access properties of messages and make logic on them if required to display them in specific design or form #}
+        {% for message in messages %} 
+            {{ message }}
+        {% endfor %}
+            </div>
+        </div>
+
+     </form>
+
+{% endblock %}

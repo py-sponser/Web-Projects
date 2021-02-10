@@ -1,0 +1,44 @@
+{% extends "index.html" %} {# only extending the navbar with regard of its logic in index page #}
+{% block body_block %}
+{# a bootstrap card in which a form for profile info exist! #}
+<div class="card" style="width: 21.5rem;display:inline-flex;margin-left: 250px;">
+    <div class="card-body">
+        <form method="POST">
+            <h4 class="card-title" style="color:dodgerblue;font-weight: bold;">Profile Info:</h4>
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            <input class="btn btn-primary" type="submit" value="Update">
+            <br>
+
+        </form>
+
+    </div>
+</div>
+{# a bootstrap card in which a form for Password change! #}
+<div class="card" style="width: 21.5rem;display:inline-flex;margin-left: 250px;">
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            <h4 class="card-title" style="color:dodgerblue;font-weight: bold;">Change Password:</h4>
+            {{ password_form.as_p }}
+            <input class="btn btn-primary" type="submit" value="Change Password"><br>
+
+        </form>
+    </div>
+</div>
+
+    {# Displaying whatever messages we created in the views functions for the user #}
+    {# for loop is used to access properties of messages and make logic on what I want, like 'tags' which are types: info, success .. and so on #}
+    {% for message in messages %} 
+        {# if the message type is info, we set the color of the boostrap alert to be danger (red) #}
+        {% if message.tags == "info" %}
+            <div style="margin:auto;width:300px;" class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% else %} {# if the message type is success, we set the color of the bootstrap alert to message.tags #}{# which is success as we created, which will be in color green in bootstrap (alert-success) #}
+        <div style="margin:auto;width:300px;" class="alert alert-{{message.tags}}" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
