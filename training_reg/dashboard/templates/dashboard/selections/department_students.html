@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        #header{
+            text-align: center;
+            margin:10px;
+            padding: 10px;
+            border-bottom: 1px solid darkred;
+            border-top: 1px solid darkred;
+        }
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-5 course_detail">
+            <h1 id="header">{{ department_name }} Department</h1>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Full Name</th>
+                      <th scope="col">Username</th>
+                      <th scope="col">Email Address</th>
+                      <th scope="col">Registered Courses</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for student in students %}
+                    <tr>
+                      <th scope="row">{{ student.id }}</th>
+                      <td>{{ student.first_name }} {{ student.last_name }} {{ student.family_name }}</td>
+                      <td>{{ student.username }}</td>
+                      <td>{{ student.email }}</td>
+                      <td>{{ student.count_trainings }}</td>
+                      <td><a href="{% url 'dashboard:edit_student_department' student_id=student.id %}" class="btn btn-secondary">Edit Student Department</a></td>
+                    </tr>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

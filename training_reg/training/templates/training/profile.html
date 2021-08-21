@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+
+        .headers{
+            color:#96292E;
+            font-weight: bolder;
+        }
+    </style>
+    <div class="container-fluid" style="margin-top: 60px">
+        <div style="margin: auto">
+            <div class="card text-dark bg-light mb-12" style="max-width: 40rem;margin: auto">
+              <div class="card-header"><p class="head_colors"><span class="headers">ID:</span> {{ user.id }} </p></div>
+              <div class="card-header"><p class="head_colors"><span class="headers">Name:</span> {{ user.first_name }} {{ user.last_name }} {{ user.family_name }}</p></div>
+              <div class="card-header"><p class="head_colors"><span class="headers">Username:</span> {{ user.username }}</p></div>
+
+              <div class="card-header"><p class="head_colors"><span class="headers">Email Address:</span> {{ user.email }}</p></div>
+              <div class="card-header"><p class="head_colors"><span class="headers">Department:</span> {{ user.department }}</p></div>
+              <div class="card-header"><p class="head_colors"><span class="headers">Registered Trainings: </span> {{ user.count_trainings }}</p></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

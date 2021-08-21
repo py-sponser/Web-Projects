@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-6 course_detail">
+                <h1 style="padding:10px;text-align: center;border-bottom: 1px solid;border-top: 1px solid">{{ course.name }}</h1>
+                <br><br><br>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Company</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Period</th>
+                      <th scope="col">Start Date</th>
+                      <th scope="col">End Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">{{ course.id }}</th>
+                      <td>{{ course.provider }}</td>
+                      <td>
+                          {% if course.available %}
+                              <span class="badge bg-success">Available</span>
+                          {% else %}
+                              <span class="badge bg-danger">Closed</span>
+                          {% endif %}
+                      </td>
+                        <td>{{ course.period }}</td>
+                        <td>{{ course.start_date }}</td>
+                        <td>{{ course.end_date }}</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+                <p class="text-center">
+                  <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Show Brief
+                  </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                  <div class="card card-body" style="text-align: left">
+                        <pre>{{ course.brief }}</pre>
+                  </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

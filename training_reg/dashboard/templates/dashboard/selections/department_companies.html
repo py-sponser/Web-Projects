@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        #header{
+            text-align: center;
+            margin:10px;
+            padding: 10px;
+            border-bottom: 1px solid darkred;
+            border-top: 1px solid darkred;
+        }
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-5 course_detail">
+            <h1 id="header">{{ department_name }} Department</h1>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th colspan="2" scope="col">ID</th>
+                      <th colspan="2" scope="col">Company</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for company in companies %}
+                    <tr>
+                      <th colspan="2"  scope="row">{{ company.id }}</th>
+                      <td colspan="2" >{{ company.name }}</td>
+                    </tr>
+                    {% endfor %}
+                  <tr>
+                      <td ></td>
+                      <td colspan="2" ><a href="{% url 'dashboard:add_company' %}" class="btn btn-secondary">Add Company</a></td>
+                  </tr>
+                  </tbody>
+                </table>
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

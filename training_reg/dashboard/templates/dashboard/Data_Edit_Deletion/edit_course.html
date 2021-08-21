@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% load static %}
+{% block content %}
+    <div class="container">
+    <h1 style="padding:10px;text-align: center;border-bottom: 1px solid;border-top: 1px solid">Edit '{{ course_name }}' Course</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form edit_course_form %}
+        <input class="btn btn-secondary" value="Edit Course" type="submit">
+    </form>
+    {% include 'messages.html' %}
+    </div>
+{% endblock %}

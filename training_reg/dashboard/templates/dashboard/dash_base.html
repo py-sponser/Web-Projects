@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid" style="margin-top:60px;">
+        <div class="row" >
+        <div class="col-lg-1 col-sm-12"></div>
+            <div class="col-lg-10 col-sm-12">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">User ID</th>
+                      <th scope="col">Full Name</th>
+                      <th scope="col">Username</th>
+                      <th scope="col">Email Address</th>
+                      <th scope="col">Department</th>
+                      <th scope="col">Registered Trainings</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for user in users %}
+                    <tr>
+                      <th scope="row">{{ user.id }}</th>
+                      <td>{{ user.first_name }} {{ user.last_name }} {{ user.family_name }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.department }}</td>
+                      <td>{{ user.count_trainings }}</td>
+                      <td colspan="2"><a class="btn btn-secondary" href="{% url 'dashboard:edit_student_department' student_id=user.id %}">Edit Student</a></td>
+                      <td></td>
+                    </tr>
+
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+                <div class="col-lg-1 col-sm-12"></div>
+
+
+
+
+    {#    Provider and its courses#}
+            <div class="col-lg-5 col-sm-12" style="margin-top: 60px">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Company</th>
+                      <th scope="col">Department</th>
+                      <th scope="col">Company Courses</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for provider in providers %}
+                    <tr>
+                      <th scope="row">{{ provider.id }}</th>
+                      <td>{{ provider.name }}</td>
+                      <td>{{ provider.department.name }}</td>
+                      <td><a href="{% url 'dashboard:company_courses' company_name=provider.name %}" class="btn btn-secondary">Show Courses</a></td>
+                      <td><a class="btn btn-danger" href="{% url 'dashboard:delete_company' company_name=provider.name %}">Delete Company</a></td>
+                    </tr>
+
+                  {% endfor %}
+                    <tr>
+                      <th scope="row"></th>
+                      <td><a class="btn btn-secondary" href="{% url 'dashboard:add_company' %}">Add Company</a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+
+            <div class="col-lg-2 col-sm-12">
+
+            </div>
+
+
+{#            Course Details#}
+            <div class="col-lg-5 col-sm-12" style="margin-top: 60px">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Course</th>
+                      <th scope="col">Company</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Period</th>
+                      <th scope="col">Start Date</th>
+                      <th scope="col">End Date</th>
+                      <th scope="col">Details</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for course in courses %}
+                    <tr>
+                      <th scope="row">{{ course.id }}</th>
+                      <td>{{ course.name }}</td>
+                      <td>{{ course.provider }}</td>
+                      <td>
+                          {% if course.available %}
+                              <span class="badge bg-success">Available</span>
+                          {% else %}
+                              <span class="badge bg-danger">Closed</span>
+                          {% endif %}
+                      </td>
+                        <td>{{ course.period }}</td>
+                        <td>{{ course.start_date }}</td>
+                        <td>{{ course.end_date }}</td>
+                        <td><a class="btn btn-secondary" href="{% url 'dashboard:course_detail' course_name=course.name %}">Show Course</a></td>
+                        <td><a class="btn btn-danger" href="{% url 'dashboard:delete_course' course_name=course.name %}">Delete Course</a></td>
+                        <td><a class="btn btn-secondary" href="{% url 'dashboard:edit_course' course_name=course.name %}">Edit Course</a></td>
+                    </tr>
+
+                  {% endfor %}
+                    <tr>
+                      <th scope="row"></th>
+                      <td colspan="2"><a class="btn btn-secondary" href="{% url 'dashboard:add_course' %}">Add Course</a></td>
+                      <td></td><td></td><td></td><td></td><td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+
+
+{#        Companies of each department#}
+        <div class="col-lg-5 col-sm-12" style="margin-top: 150px">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Department</th>
+                      <th scope="col">Companies</th>
+                      <th scope="col">Students</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for department in departments %}
+                    <tr>
+                      <th scope="row">{{ department.id }}</th>
+                      <td>{{ department.name }}</td>
+                      <td><a class="btn btn-secondary" href="{% url 'dashboard:get_department_companies' department_name=department.name %}">Show Companies</a></td>
+                      <td><a class="btn btn-secondary" href="{% url 'dashboard:get_department_students' department_name=department.name %}">Show Students</a></td>
+                      <td><a class="btn btn-danger" href="{% url 'dashboard:delete_department' department_name=department.name %}">Delete Department</a></td>
+                      <td><a class="btn btn-secondary" href="{% url 'dashboard:edit_department' department_name=department.name %}">Edit Department</a></td>
+                    </tr>
+                  {% endfor %}
+                  <tr>
+                      <td></td>
+                      <td><a class="btn btn-secondary" href="{% url 'dashboard:add_new_department' %}">Create Department</a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                  </tbody>
+                </table>
+            </div>
+
+
+            <div class="col-lg-2 col-sm-12">
+
+            </div>
+{#            Registered Courses#}
+            <div class="col-lg-5 col-sm-12" style="margin-top: 150px">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Course</th>
+
+                      <th scope="col">Registered Students</th>
+                      <th scope="col">Seats Left</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for course in courses %}
+                    <tr>
+                      <th scope="row">{{ course.id }}</th>
+                      <td>{{ course.name }}</td>
+                      <td>{{ course.get_course_registered_students }}</td>
+                      <td>{{ course.get_course_seats_left }}</td>
+                      <td><a class="btn btn-secondary" href="{% url 'dashboard:get_course_registered_students' course_name=course.name %}">Show Students</a></td>
+                        {% if course.get_course_seats_left != 0 %}
+                      <td><a class="btn btn-secondary" href="{% url 'dashboard:add_student_to_course' %}">Add student</a></td>
+                        {% endif %}
+                    </tr>
+                  {% endfor %}
+                  <tr>
+                      <td></td>
+                      <td><a class="btn btn-secondary" href="{% url 'dashboard:add_student_to_course' %}">Register new student course</a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

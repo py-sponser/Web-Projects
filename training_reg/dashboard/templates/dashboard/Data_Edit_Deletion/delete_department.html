@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+    <h1 style="padding:10px">Are you sure you want to delete '{{ department_name }}' Department?</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <a class="btn btn-secondary" href="{% url 'dashboard:dashboard_lists' %}">Cancel</a>
+        <input class="btn btn-danger" value="Delete" type="submit">
+
+    </form>
+    {% include 'messages.html' %}
+    </div>
+{% endblock %}

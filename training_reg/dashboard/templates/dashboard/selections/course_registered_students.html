@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        #header{
+            text-align: center;
+            margin:10px;
+            padding: 10px;
+            border-bottom: 1px solid darkred;
+            border-top: 1px solid darkred;
+        }
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-1">
+
+            </div>
+            <div class="col-sm-8 course_detail">
+            <h1 id="header">{{ course_name }} </h1>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Full Name</th>
+                      <th scope="col">Username</th>
+                      <th scope="col">Email Address</th>
+                      <th scope="col">Registered Courses</th>
+                      <th scope="col">Pass Status</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for user_course in user_courses %}
+                    <tr>
+                      <th scope="row">{{ user_course.user.id }}</th>
+                      <td>{{ user_course.user.first_name }} {{ user_course.user.last_name }} {{ user_course.user.family_name }}</td>
+                      <td>{{ user_course.user.username }}</td>
+                      <td>{{ user_course.user.email }}</td>
+                      <td>{{ user_course.user.count_trainings }}</td>
+                      <td colspan="3" id="status{{ user_course.user.id }}"><button class="btn btn-secondary" onclick="get_student_training_status('{{ course_name }}', '{{ user_course.user.id }}')">Pass Status</button></td>
+                      <td colspan="4"><a class="btn btn-danger" href="{% url 'dashboard:delete_student_from_course' student_id=user_course.user.id course_name=course_name %}">Delete Student Course</a></td>
+                      <td colspan="4"><a class="btn btn-secondary" href="{% url 'dashboard:edit_student_course' student_id=user_course.user.id course_name=course_name %}">Edit Student Course</a></td>
+                     </tr>
+                    {% endfor %}
+                  <tr>
+                      <td></td><td colspan="2"><a href="{% url 'dashboard:add_student_to_course' %}" class="btn btn-secondary">Add Student</a></td><td></td><td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                  </tbody>
+                </table>
+            </div>
+            <div class="col-sm-1">
+
+            </div>
+        </div>
+    </div>
+    <script>
+    function get_student_training_status(course_name, user_id){
+        console.log(course_name, user_id)
+        let url = "../../training/get_student_training_pass_status/";
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify({"course_name":course_name, "user_id":user_id}),
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log(`Data: ${data}`);
+            let status = document.getElementById(`status${user_id}`);
+            if(data == true){
+                status.innerHTML = `
+                    <span class="badge rounded-pill bg-success">Passed</span>
+                `
+            }
+            else if(data == false){
+                status.innerHTML = `
+                    <span class="badge rounded-pill bg-danger">Failed</span>
+                `
+            }
+            else if(data == null){
+                status.innerHTML = `
+                    <span class="badge rounded-pill bg-warning">Awaiting Evaluation</span>
+                `
+            }
+        })
+    }
+
+    </script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <div class="container text-center" style="text-align: center;width: 300px">
+
+    <img class="mb-4 navbar-brand img-responsive edit" src="{% static 'images/logo.png' %}" alt="Brand Icon" height="150" >
+        <form method="POST" action="{% url 'accounts:login' %}" class="form-group text-center" >
+            {% csrf_token %}
+          <input style="color:#96292E;text-decoration: none;outline: #96292E;box-shadow: none;border-color: #CED4DA" type="text" id="inputEmail" class="form-control form-group me-2 " placeholder="Login" required="" autofocus="" name="login"><br>
+
+          <input style="color:#96292E;text-decoration: none;outline: #96292E;box-shadow: none;border-color: #CED4DA" type="password" id="inputPassword" class="form-control form-group " placeholder="Password" required="" name="password"><br>
+
+      <button class="btn btn-secondary "  style="width: 150px" type="submit">Sign in</button>
+        </form>
+        <br>
+    {% include 'messages.html' %}
+    </div>
+{% endblock %}
