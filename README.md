@@ -2,4 +2,3 @@
 For front end, the followings will be used:
 - Bootstrap
 - Javascript
-- Reactjs
