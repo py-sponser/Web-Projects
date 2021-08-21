@@ -1,4 +1,9 @@
-# Web Projects Using Django Framework and Django REST API Framework.
-For front end, the followings will be used:
+# Backend:
+- Django Framework.
+- Django REST API Framework.
+
+
+Frontend:
 - Bootstrap
 - Javascript
+- Reactjs ( Later on )
